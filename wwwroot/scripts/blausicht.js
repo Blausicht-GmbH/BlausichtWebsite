@@ -5,43 +5,48 @@ window.addScrollListener = function (dotNetHelper) {
     });
 }
 
-// Smooth scrolling für mobile Navigation
-window.smoothScrollToSection = function (sectionId) {
-    const element = document.querySelector(sectionId);
-    if (element) {
-        element.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-        });
-    }
-}
-
 // Event Listener für Navigation Links
 document.addEventListener('click', function (e) {
-    // Prüfe ob das geklickte Element ein Link mit # href ist
-    const link = e.target.closest('a[href^="#"]');
+    // Prüfe ob das geklickte Element ein Link mit data-scroll-target ist
+    const link = e.target.closest('a[data-scroll-target]');
 
     if (link) {
-        console.log('Navigation Link Clicked:', link.getAttribute('href'));
+        e.preventDefault(); // Verhindere die Standard-Navigation
 
-        const href = link.getAttribute('href');
+        bootstrap.Offcanvas.getInstance(document.getElementById('offcanvasNav'))?.hide();
 
-        if (href && href !== '#' && href.length > 1) {
-            e.preventDefault();
+        const scrollTarget = link.getAttribute('data-scroll-target');
+        console.log('Navigation Link Clicked - Scroll to:', scrollTarget);
 
-            // Einfach: Immer den Toggler-Button "klicken" um Menü zu schließen
+        if (scrollTarget) {
             const navbarToggler = document.querySelector('.navbar-toggler');
             const navbarCollapse = document.querySelector('.navbar-collapse');
 
             // Prüfe ob mobiles Menü sichtbar ist
-            if (navbarToggler && !navbarToggler.classList.contains('collapsed')) {
+            if (navbarToggler &&
+                window.getComputedStyle(navbarToggler).display !== 'none' &&
+                navbarCollapse &&
+                navbarCollapse.classList.contains('show')
+            ) {
+                // Schließe das mobile Menü
                 navbarToggler.click();
-            }
 
-            // Smooth scroll zur Section
-            setTimeout(() => {
-                window.smoothScrollToSection(href);
-            }, 300);
+                // Warte bis das Menü geschlossen ist, dann scrolle
+                setTimeout(() => {
+                    window.smoothScrollToSection(scrollTarget);
+                }, 150);
+            } else {
+                // Desktop - scrolle sofort
+                window.smoothScrollToSection(scrollTarget);
+            }
         }
     }
 });
+
+// Smooth scrollinG
+window.smoothScrollToSection = function (sectionId) {
+    const target = document.getElementById(sectionId);
+    if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+    }
+}
