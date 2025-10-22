@@ -1,0 +1,24 @@
+﻿<div class="col-md-4 d-flex">
+    <div class="angebot-card w-100">
+        <i class="bi @Icon"></i>
+        <h3>@Title</h3>
+        <p>
+            <span class="fw-bold">@Subtitle</span>
+            <br>@Description
+        </p>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public string Icon { get; set; } = string.Empty;
+
+    [Parameter, EditorRequired]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter, EditorRequired]
+    public string Subtitle { get; set; } = string.Empty;
+
+    [Parameter, EditorRequired]
+    public string Description { get; set; } = string.Empty;
+}
