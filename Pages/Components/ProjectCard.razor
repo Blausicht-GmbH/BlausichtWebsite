@@ -1,0 +1,32 @@
+﻿<div class="col-md-4 d-flex">
+    <div class="card border-0 bg-secondary rounded-5 p-3">
+        <img src="img/projects/@(Image)" class="card-img-top img-fluid d-flex align-self-center p-3" style="height: 130px; object-fit: contain;" alt="@Title">
+
+        <div class="card-body text-start">
+            <h3 class="card-title text-primary">@Title</h3>
+            <p class="text-primary">@Description</p>
+            <div class="d-flex flex-wrap gap-2 mt-3">
+                @foreach (var badge in Badges)
+                {
+                    <span class="badge rounded-pill text-bg-primary py-2 px-3 fs-6 fw-light">@badge</span>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@code {
+    [Parameter, EditorRequired]
+    public string Image { get; set; } = string.Empty;
+
+    [Parameter, EditorRequired]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter, EditorRequired]
+    public string Subtitle { get; set; } = string.Empty;
+
+    [Parameter, EditorRequired]
+    public string Description { get; set; } = string.Empty;
+
+    [Parameter, EditorRequired]
+    public List<string> Badges { get; set; } = new();
+}
