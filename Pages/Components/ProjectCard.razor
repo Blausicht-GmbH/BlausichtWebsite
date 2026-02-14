@@ -1,6 +1,8 @@
 ﻿<div class="col-md-4 d-flex">
     <div class="card border-0 bg-secondary rounded-5 p-3">
-        <img src="img/projects/@(Image)" class="card-img-top img-fluid d-flex align-self-center p-3" style="height: 130px; object-fit: contain;" alt="@Title">
+        <a href="@Link" target="_blank" class="stretched-link">
+            <img src="img/projects/@(Image)" class="card-img-top img-fluid d-flex align-self-center p-3" style="height: 130px; object-fit: contain;" alt="@Title">
+        </a>
 
         <div class="card-body text-start">
             <h3 class="card-title text-primary">@Title</h3>
@@ -29,4 +31,7 @@
 
     [Parameter, EditorRequired]
     public List<string> Badges { get; set; } = new();
+
+    [Parameter, EditorRequired]
+    public string Link { get; set; } = string.Empty;
 }
